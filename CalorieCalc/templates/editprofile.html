@@ -1,0 +1,123 @@
+{% extends 'home.html' %}
+{% block content %}
+<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Google+Sans:300,400,500'>
+
+
+<div class="main-panel">
+  <div class="content-wrapper">
+
+  
+  
+          
+        <!-- <button @click="submitDate" class="btn btn-primary">Submit</button> -->
+      
+
+
+         
+          <div class="col-lg-6 grid-margin stretch-card" style="margin-left:50px; margin-top:50px;">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Profile</h4>
+                 <!-- <p class="card-description"> Add class <code>.table</code>  -->
+                </p>
+                <div class="table-responsive">
+                  <table class="table" style="border:0">
+                    
+                    <tbody>
+                     <form action="/editprofile/" method="post" class="popup-form">
+                        {% csrf_token %}
+                    <tr>
+                        <td> User Name</td>
+                        <!-- <td> <div class="form-group">
+                    <input type="text" name="user" value="{{user.username}}">
+                  </div> -->
+                      <td>{{user.username}}  </td>
+                    </tr>
+                    <tr>
+                        <td > Gender</td>
+                        <td id="gender">
+                           <!--<div class="form-group">
+                             <select name="gender" id="id_gender">
+                                {% for choice in user.get_gender_display %}
+                                    <option value="{{ choice.0 }}" {% if choice.0 == user.gender %}selected{% endif %}>
+                                        {{ choice.1 }}
+                                    </option>
+                                {% endfor %}
+                            </select>               
+                          </div>-->
+                        {{user.gender}}</td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td> Email</td>
+                        <td>  <div class="form-group">
+                            
+                            <input type="email" name="email" value="{{user.email}}">
+
+        
+                          </div></td>
+                    </tr>
+                   
+                        <td> Age</td>
+                        <td><div class="form-group">
+                           
+                            <input type="number" name="age" value="{{user.age}}">
+
+                                        </div></td>
+                    </tr>
+                         
+                    <tr>
+                        <td> Weight</td>
+                        <td><div class="form-group">
+                           
+                            <input type="number" name="weight" value="{{user.weight}}">
+
+                                        </div></td>
+                    </tr>
+                    <tr>
+                        <td> Height</td>
+                        <td><div class="form-group">
+                           
+                            <input type="number" name="height" value="{{user.height}}">
+
+                                        </div></td>
+                    </tr>
+                         <tr><td colspan="2">
+                            <button  class="btn btn-primary mr-2">Edit</button>
+                         </td></tr>
+                     
+                     </form>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            </div>
+         
+         
+         
+         
+
+</div></div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.22/vue.min.js'></script>
+  <script  src="/static/dist/script.js"></script>
+  <script>
+    var genderElement = document.getElementById("gender");
+    var gender = genderElement.innerHTML;
+
+    console.log(gender);
+
+    if (gender === 'F') {
+      genderElement.innerHTML = "Female";
+    }
+    else if (gender === 'M'){
+      genderElement.innerHTML = "Male";
+    }
+    else{
+      genderElement.innerHTML = "Other";
+
+    }
+    
+  </script>
+  {% endblock %}

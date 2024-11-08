@@ -1,0 +1,82 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <body>
+        <form id="weightJourneyForm" method="post">
+            {% csrf_token %}
+             <div class="form-group row" style="margin-top: -10px;">
+                      <div class="col">
+            <label>Current Weight(kg)</label>
+                          <input class="typeahead" type="text" name="current">
+                     </div>
+                      
+                      <div class="col">
+                          <label>Desired Weight(kg)</label>
+                          <input class="typeahead" type="text" name="desired">
+    </div></div>
+     <div class="form-group row" style="margin-top: -10px;">
+                      <div class="col">
+                          <label>Duration needed</label>
+                          <input class="typeahead" type="text" name="time">
+                          </div></div>
+                          <button class="btn btn-sm btn-primary" style="width: 100px; height: 36px; margin-top: 1px; margin-left:150px;">Create</button>
+    
+          </form>
+        <p id="weeks">weeks: {{ weeks}}</p>
+                          <p id="weights">weights: {{ weights }}</p>
+                          <div id="caloricIntake">daily_caloric_intake:{{daily_caloric_intake}}</div>
+
+                          <canvas id="weightChart" style="width:100; height:100;"></canvas>
+
+    </body>
+    <script>
+        let weekarray=[]
+        document.addEventListener('DOMContentLoaded', function () {
+     const ctx = document.getElementById('weightChart').getContext('2d');
+     const weeks = JSON.parse('{{ weeks_json|safe }}');
+        const weights = JSON.parse('{{ weights_json|safe }}');
+
+     weekarray.push(weeks)
+     console.log(weekarray[0])
+
+ 
+     const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: weeks, // Convert weeks to strings if they are numbers
+            datasets: [{
+                label: 'Weight Gain Progress',
+                data: weights,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false,
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Weeks'
+                    }
+                },
+                y: {
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                    title: {
+                        display: true,
+                        text: 'Weights'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+       
+         
+       
+</html>

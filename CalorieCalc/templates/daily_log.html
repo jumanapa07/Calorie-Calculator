@@ -1,0 +1,303 @@
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Bootstrap JS (Popper.js and jQuery are required for Bootstrap's JavaScript features) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% extends 'home.html' %}
+{% block content %}
+<style>
+    .arrow{
+        color: #00e759;
+  /* background-color: #b7c7cc; */
+ 
+    }
+</style>
+<div class="main-panel">
+    <div class="content-wrapper">
+      {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li style="color:#00e759;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                 
+                  <div class="row">
+                    <div class="col-9">
+                      <div class="d-flex align-items-center align-self-start">
+                        <h3 class="mb-0">Breakfast</h3>
+                        <p class="text-success ml-2 mb-0 font-weight-medium">{{breakfast_total}} kcal</p>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="icon icon-box-success ">
+                        <a class="arrow" href="#" data-toggle="modal" data-target="#breakForm" id="category_field" name="breakfast" >
+
+                        <span class="mdi mdi-arrow-top-right icon-item"></span></a>
+                      </div>
+                    </div>
+                  </div>
+                  <h6 class="text-muted font-weight-normal">Calorie gains</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">Lunch</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">{{lunch_total}} kcal</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success ">
+                            <a class="arrow" href="#" data-toggle="modal" data-target="#lunchForm" id="category_field" name="lunch" onclick="toggleForm('lunch')">
+
+                          <span class="mdi mdi-arrow-top-right icon-item"></span></a>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Calorie gains</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">Dinner</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">{{dinner_total}} kcal</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success ">
+                          <a class="arrow" href="#" data-toggle="modal" data-target="#dinnerForm" id="category_field" name="dinner" >
+
+                          <span class="mdi mdi-arrow-top-right icon-item"></span></a>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Calorie gains</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">Snacks</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">{{snack_total}} kcal</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success ">
+                          <a class="arrow" href="#" data-toggle="modal" data-target="#snackForm" id="category_field" name="Snacks">
+
+                          <span class="mdi mdi-arrow-top-right icon-item"></span></a>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Calorie gains</h6>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="row">
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">Excercise</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">{{e_total}} kcal</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success ">
+                          <a class="arrow" href="#" data-toggle="modal" data-target="#exerciseForm" id="exercise" name="lunch">
+
+                          <span class="mdi mdi-arrow-top-right icon-item"></span></a>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Calorie burns</h6>
+                  </div>
+                </div>
+              </div>
+              
+        
+        </div></div></div>
+        <div class="modal" id="snackForm" tabindex="-1" role="dialog" aria-labelledby="foodFormLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-body">
+                      <h4 class="card-title">Snacks</h4>
+                      <form action="/add_meal/?category=snack" method="post">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <input type="hidden" id="category" name="category"  value="{{ii}}" readonly disabled>
+                            <label for="foodName">Food Details</label>
+                              <p>eg:" 1 cup mashed potatoes and 2 tbsp gravy "</p>
+                              <input type="text" class="form-control form-control-lg" name="query" id="query">
+                          </div>
+                        
+                         <button type="submit" class="btn btn-primary mr-2" >Submit</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+          
+      
+      
+              </div>
+              
+                
+          </div>
+      </div>
+
+        <div class="modal" id="dinnerForm" tabindex="-1" role="dialog" aria-labelledby="foodFormLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-body">
+                      <h4 class="card-title">Dinner</h4>
+                      <form action="/add_meal/?category=dinner" method="post">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <input type="hidden" id="category" name="category"  value="{{ii}}" readonly disabled>
+                            <label for="foodName">Food Details</label>
+                              <p>eg:" 1 cup mashed potatoes and 2 tbsp gravy "</p>
+                              <input type="text" class="form-control form-control-lg" name="query" id="query">
+                          </div>
+                        
+                         <button type="submit" class="btn btn-primary mr-2" >Submit</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      
+      
+              </div>
+              
+                
+          </div>
+      </div>
+      <div class="modal" id="lunchForm" tabindex="-1" role="dialog" aria-labelledby="foodFormLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="card-title">Lunch</h4>
+                    <form action="/add_meal/?category=lunch" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                          <input type="hidden" id="category" name="category"  value="{{ii}}" readonly disabled>
+                          <label for="foodName">Food Details</label>
+                            <p>eg:" 1 cup mashed potatoes and 2 tbsp gravy "</p>
+                            <input type="text" class="form-control form-control-lg" name="query" id="query">
+                        </div>
+                      
+                       <button type="submit" class="btn btn-primary mr-2" >Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    
+            </div>
+            
+              
+        </div>
+        <div class="modal" id="breakForm" tabindex="-1" role="dialog" aria-labelledby="foodFormLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-body">
+                      <h4 class="card-title">BreakFast</h4>
+                      <form action="/add_meal/?category=breakfast" method="post">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <input type="hidden" id="category" name="category"  value="{{ii}}" readonly disabled>
+                            <label for="foodName">Food Details</label>
+                              <p>eg:" 1 cup mashed potatoes and 2 tbsp gravy "</p>
+                              <input type="text" class="form-control form-control-lg" name="query" id="query">
+                          </div>
+                        
+                         <button type="submit" class="btn btn-primary mr-2" >Submit</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      
+      
+              </div>
+              
+                
+          </div>
+      </div>
+      <div class="modal" id="exerciseForm" tabindex="-2" role="dialog" aria-labelledby="exerciseFormLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h4 class="card-title">Exercise</h4>
+                            <p>eg:" ran 3 miles or take 10 pull ups "</p>
+
+                            <form action="/add_exercise/" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="foodName">Exercise description</label>
+                                    <input type="text" class="form-control form-control-lg" name="query" id="foodName">
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label for="quantity">Duration</label>
+                                    <div class="form-inline">
+                                      <input type="text" class="form-control mb-2 mr-sm-2 form-control-lg" id="quantity" name="quantity">
+                                      <div class="input-group mb-2 mr-sm-2">
+                                          <div class="form-group">
+                                              <select class="form-control form-control-lg" name="unit">
+                                                  <option>hour</option>
+                                                  <option>min</option>
+                                                  <option>sec</option>
+                                                  <option>kcal</option>
+                                              </select>
+                                          </div>
+                                          <div class="input-group-prepend">
+                                              <div class="input-group-text"> unit</div>
+                                          </div>
+                                      </div>                          </div> -->
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                    </div>
+      
+            </div>
+        </div>
+{% endblock %}
+
+<script>
+  function toggleForm(category) {
+    var paramValue = category;
+
+// Construct the URL with the determined parameter value
+var url = "{% url '/add_meal/' %}?category=" + encodeURIComponent(paramValue);
+
+// Navigate to the constructed URL
+window.location.form.action = url;
+    }
+    </script>

@@ -1,0 +1,120 @@
+{% extends 'home.html' %}
+{% block content %}
+<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Google+Sans:300,400,500'>
+
+
+<div class="main-panel">
+  <div class="content-wrapper">
+
+  
+  
+           <div class="form-inline">
+          <form action="/view_logs/" method="post">
+            {% csrf_token %}
+          
+          <input type="date" class="form-control mb-2 mr-sm-2 form-control-lg" id="quantity" name="date">
+
+         <button type="submit" style="margin-left: 10px; margin-bottom:10px; color:aliceblue; height: 45px; background-color: #242b2e " class="add btn">Check</button>
+        </form></div> 
+        <!-- <button @click="submitDate" class="btn btn-primary">Submit</button> -->
+      
+
+
+         <div class="row">
+          <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Food Log</h4>
+                 <!-- <p class="card-description"> Add class <code>.table</code>  -->
+                </p>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Category</th>
+                        <th style="width: 20px;">Food Item</th>
+                        <th>Quantity</th>
+                        <th>Calorie</th>
+                        <th>Action</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for x in flogs %}
+                      <tr>
+                        <td>{{x.category}}</td>
+                        <td>{{x.food_consumed}}</td>
+                        <td class="text-danger"> {{x.quantity}} {{x.unit}} </i></td>
+                        <td class="text-danger">{{x.calories}} <i class="mdi mdi-arrow-up"></i></td>
+
+
+                        <td class="nav-item menu-items form-inline">
+                          <a class="" href="/deletefood/?id={{x.id}}">
+                            <span class="menu-icon">
+                          <i class="mdi  mdi mdi-delete"></i>
+                          
+                          
+                          </a>
+
+                          <a style="margin-left: 10px;" href="/editfood/?id={{x.id}}">
+                            
+                          <i class="mdi  mdi mdi-border-color"></i>
+                            </span>
+                          
+                          </a>
+                        </label></td>                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Exercise Log</h4>
+                 <!-- <p class="card-description"> Add class <code>.table-hover</code> -->
+                </p>
+                <div class="table-responsive">
+                  <table class="table ">
+                    <thead>
+                      <tr>
+                        <th>Exercise Name</th>
+                        <th>Duration</th>
+                        <th>Calorie</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for x in var %}
+                        <tr>
+                            <form action="/editexercise/?id={{x.id}}" method="post">
+                                {% csrf_token %}
+                            <div class="form-group">
+                              
+                            <td><input type="text" name="name" value="{{x.exercise_name}}" style="width: 60px;"></td>
+                            <td><input type="text" name="time" value="{{x.duration_minutes}}"  style="width: 60px;"></td>
+                            <td class="text-danger"> {{x.calories_burned}} <i class="mdi mdi-arrow-down"></i></td>
+    
+    
+                            <td class="nav-item menu-items form-inline">
+                              
+    
+                              <a style="margin-left: 10px;" href="/editeexercise/?id={{x.id}}">
+                                
+                              <button class="btn btn-primary mr-2">Edit</button>
+                              </a>
+                            </label></td>             </div>   </form>     </tr>
+                            {% endfor %} 
+                    </tbody>
+                  </table>
+                </div>
+              </div> 
+         
+
+</div></div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.22/vue.min.js'></script>
+  <script  src="/static/dist/script.js"></script>
+  {% endblock %}

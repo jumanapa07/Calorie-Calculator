@@ -1,0 +1,264 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+<body>
+<div class='py-4 mt-auto'>
+    <div class='container-fluid px-4'>
+
+        <div class='row justify-content-center'>
+            <div class='col-xl-12'>
+                
+                    <div class='row'>
+                        <div class='col-md-6 mt-4'>
+
+                            <div class='card bg-secondary mb-3'>
+                                <div class='card-header'>
+                                    <h4>Hi, <strong>{{ user.username }}</strong>!</h4>
+                                </div>
+                                <div class='card-body'>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            Username: <strong>{{ user.username }}</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            Email: <strong>{{ user.email }}</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            Date joined: <strong>{{ user.date_joined }}</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            Last login: <strong>{{ user.last_login }}</strong>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class='card bg-secondary mb-3'>
+
+                                <div class='card-header'>
+                                    <h4>Record Your Weight</h4>
+                                </div>
+                                <div class='card-body'>
+
+                                <div class='form-group'>
+          
+                                        <form action="/goal/" method='POST'>
+                                            {% csrf_token %}
+                                            <div class='form-group'>
+                                                <div class='row'>
+                                                    <div class='col-5'>
+                                                        <label for='date_weight' class='form-label mt-2'>
+                                                            Date
+                                                        </label>
+                                                        <input
+                                                            class='form-control'
+                                                            type='date'
+                                                            name='date' 
+                                                            id='date'
+                                                        >
+                                                    </div>
+                                                    <div class='col-5'>
+                                                        <label for='weight' class='form-label mt-2'>
+                                                            Weight in kg
+                                                        </label>
+                                                        <input 
+                                                            class='form-control'
+                                                            type='number' 
+                                                            name='weight'
+                                                            id='weight'
+                                                            placeholder='0.00' required name='weight' 
+                                                            min='0' 
+                                                            value='0' 
+                                                            step='1' 
+                                                            title='Weight' 
+                                                            pattern='^\d*(\.\d{0,2})?$'
+                                                        >
+                                                    </div>
+                                                    <div class='col-2'>
+                                                        <button type='submit' class='btn btn-primary' style='margin-top:40px;'>
+                                                            Add
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class='card bg-secondary mb-3'>
+                                <div class='card-header'>
+                                    <h4>Weight Log</h4>
+                                </div>
+                                <div class='card-body'>
+
+                                    <div class="table-responsive">
+                                        <table id='weightable' class="table">
+                                          <thead>
+                                            <tr>
+                                              <th>Weight in KG</th>
+                                              <th>Date</th>
+                                              <!-- <th>Quantity</th>
+                                              <th>Calorie</th> -->
+                                              <th>Action</th>
+                      
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {% for x in queryset %}
+                                            <tr>
+                                              <td>{{x.weight}}</td>
+                                              <td>{{x.date}}</td>
+                                              <!-- <td class="text-danger"> {{x.quantity}} {{x.unit}} </i></td>
+                                              <td class="text-danger">{{x.calories}} <i class="mdi mdi-arrow-up"></i></td> -->
+                      
+                      
+                                              <td><label class="badge badge-danger">Edit</label><label class="badge badge-danger">Edit</label></td>
+                                            </tr>
+                                            {% endfor %}
+                                          </tbody>
+                                        </table>
+
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class='col-md-6 mt-4'>
+                            <div class='card bg-secondary mb-3'>
+                                <div class='card-header'>
+                                    <h4>Weight History</h4>
+                                </div>
+                                <div class='card-body justify-content-center'>
+                                    <div class='line-chart'>
+                                        <canvas id='myChart'></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</div>    </body>
+
+
+
+<script src="/static/js/weight.js">
+//     document.addEventListener('DOMContentLoaded', function () {
+//    // Your chart creation script here
+
+
+//     const table = document.getElementById('weightable');
+
+// let recorded_weight = [];
+// let recorded_date = [];
+
+// for (let i = 1; i < table.rows.length; i++) {
+//   recorded_weight.push([parseFloat(table.rows[i].cells[0].innerHTML)]);
+
+//   recorded_date.push([table.rows[i].cells[1].innerHTML]);
+// }
+// console.log(recorded_weight);
+// console.log(recorded_date);
+
+// let values = recorded_weight.flat();
+
+// // Set new default font family and font color to mimic Bootstrap's default styling
+// // Chart.defaults.global.defaultFontFamily =
+// //   'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"';
+// // Chart.defaults.global.defaultFontColor = '#858796';
+
+// // Area Chart - Weight History
+// const ctxAreaChart = document.getElementById('myChart');
+// const myAreaChart = new Chart(ctxAreaChart, {
+//   type: 'line',
+//   data: {
+//     labels: [...recorded_date],
+//     datasets: [
+//       {
+//         label: 'Weight',
+//         data: values,
+//         lineTension: 0.3,
+//         backgroundColor: 'rgba(2,117,216,0.2)',
+//         borderColor: 'rgba(2,117,216,1)',
+//         pointRadius: 5,
+//         pointBackgroundColor: 'rgba(2,117,216,1)',
+//         pointBorderColor: 'rgba(255,255,255,0.8)',
+//         pointHoverRadius: 5,
+//         pointHoverBackgroundColor: 'rgba(2,117,216,1)',
+//         pointHitRadius: 50,
+//         pointBorderWidth: 2,
+//       },
+//     ],
+//   },
+//   options: {
+//     scales: {
+//       xAxes: [
+//         {
+//           ticks: {
+//             autoSkip: false,
+//             maxRotation: 60,
+//             minRotation: 60,
+//           },
+//           gridLines: {
+//             display: true,
+//           },
+//           scaleLabel: {
+//             display: true,
+//             padding: 10,
+//             fontColor: '#555759',
+//             fontSize: 16,
+//             fontStyle: 700,
+//             labelString: 'Date',
+//           },
+//         },
+//       ],
+//       yAxes: [
+//         {
+//           ticks: {
+//             min: 0,
+//             max: 120,
+//             maxTicksLimit: 12,
+//             padding: 10,
+//             // Include a 'kg' in the ticks
+//             callback: function (value, index, values) {
+//               return value + 'kg';
+//             },
+//           },
+//           gridLines: {
+//             color: 'rgba(0, 0, 0, .125)',
+//           },
+//           scaleLabel: {
+//             display: true,
+//             padding: 10,
+//             fontColor: '#555759',
+//             fontSize: 16,
+//             fontStyle: 700,
+//             labelString: 'Weight in kg',
+//           },
+//         },
+//       ],
+//     },
+//     legend: {
+//       display: false,
+//     },
+//   },
+// });
+// });
+// </script>

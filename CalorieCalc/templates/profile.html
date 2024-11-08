@@ -1,0 +1,93 @@
+{% extends 'home.html' %}
+{% block content %}
+<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Google+Sans:300,400,500'>
+
+
+<div class="main-panel">
+  <div class="content-wrapper">
+
+  
+  
+          
+        <!-- <button @click="submitDate" class="btn btn-primary">Submit</button> -->
+      
+
+
+         
+          <div class="col-lg-6 grid-margin stretch-card" style="margin-left:50px; margin-top:50px;">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Profile</h4>
+                 <!-- <p class="card-description"> Add class <code>.table</code>  -->
+                </p>
+                <div class="table-responsive">
+                  <table class="table" style="border:0">
+                    
+                    <tbody>
+                     
+                    <tr>
+                        <td> User Name</td>
+                        <td>{{user.username}}</td>
+                    </tr>
+                    <tr>
+                        <td> Email</td>
+                        <td>{{user.email}}</td>
+                    </tr>
+                    <tr>
+                        <td > Gender</td>
+                        <td id="gender">{{user.gender}}</td>
+                    </tr>
+                    <tr>
+                        <td> Age</td>
+                        <td>{{user.age}}</td>
+                    </tr>
+                         
+                    <tr>
+                        <td> Weight</td>
+                        <td>{{user.weight}}</td>
+                    </tr>
+                    <tr>
+                        <td> Height</td>
+                        <td>{{user.height}}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">  <a href="/editprofile/"><button  class="btn btn-primary mr-2">
+                        Edit
+                       </button></a>
+                   </td>
+                    </tr>
+                     
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            </div>
+         
+         
+         
+         
+
+</div></div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.22/vue.min.js'></script>
+  <script  src="/static/dist/script.js"></script>
+  <script>
+    var genderElement = document.getElementById("gender");
+    var gender = genderElement.innerHTML;
+
+    console.log(gender);
+
+    if (gender === 'F') {
+      genderElement.innerHTML = "Female";
+    }
+    else if (gender === 'M'){
+      genderElement.innerHTML = "Male";
+    }
+    else{
+      genderElement.innerHTML = "Other";
+
+    }
+    
+  </script>
+  {% endblock %}

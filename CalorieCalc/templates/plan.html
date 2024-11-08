@@ -1,0 +1,193 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% extends 'home.html' %}
+{% block content %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row">
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card" style="height: 280px;">
+          <div class="card-body">
+            <h4 class="card-title" style="color:#ffab00 ;">Create new Plan</h4>
+      <form id="weightJourneyForm" method="post">
+        {% csrf_token %}
+         <div class="form-group row" style="margin-top: -10px;">
+         
+
+                  <div class="col">
+        <label>Current Weight(kg)</label>
+                      <input class="typeahead" type="number" name="current">
+                 </div>
+                  
+                  <div class="col">
+                      <label>Target Weight(kg)</label>
+                      <input class="typeahead" type="number" name="desired">
+</div></div>
+ <div class="form-group row" style="margin-top: -10px;">
+                  <div class="col">
+                      <label>Target Duration(weeks)</label>
+                      <input class="typeahead" type="number" name="time">
+                      </div></div>
+                      <button class="btn btn-sm btn-warning" style="width: 100px; height: 36px; margin-top: 1px; margin-left:150px;">Create</button>
+
+      </form>
+</div></div></div>
+        
+          
+                {% if plan %}
+               
+                <div class="col-md-6 grid-margin stretch-card" > 
+                  <div class="card" > <!-- Increase the width here -->
+                      <div class="card-body">
+                          <h4 class="card-title" style="color:#ffab00 ;">Current Weight Plan</h4>
+                          
+                          <p id="current">Current Weight :<span><b>{{plan.current_weight}} kg</span></b></p>
+                          <p>Target Weight :  <b>{{plan.target_weight}} kg </b></p>
+                          <p>Target duration :  <b>{{plan.target_duration}} weeks </b></p>
+                         <p>Target Rate per week: <b> {{plan.target_rate}} per week </b></p>
+                          
+                      <div id="caloricIntake">Daily Calorie intake needed: <b>{{plan.calorie_needed}} kcal</div>
+                      </b>  <!-- <canvas id="myChart" style="width:100%; height:100%;"></canvas> -->
+                         
+                          <!-- Make the canvas fill its container -->
+                      </div>
+                  </div>
+              </div>
+             
+              </div>
+              <div class="row">
+              <div class="col-lg-12 grid-margin stretch-card"> 
+                <div class="card" id="chartContainer"> <!-- Increase the width here -->
+                    <div class="card-body">
+                        <h4 class="card-title" style="color:#ffab00 ;">Current Weight Plan Chart</h4>
+                        
+                        <canvas id="weightChart" style="width: 500px; height:90px;"></canvas>
+                      </div>
+                </div>
+            </div>
+   </div> {% endif %}
+              </div>
+            </div>
+         
+          
+         
+
+        
+        
+       
+            <!-- <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Weight Log</h4>
+                  
+                  </p>
+                  <div class="table-responsive">
+                    <table id='weightable' class="table">
+                      <thead>
+                        <tr>
+                          <th>Weight in KG</th>
+                          <th>Date</th>
+                         
+                          <th>Action</th>
+  
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for x in queryset %}
+                        <tr>
+                          <td>{{x.weight}}</td>
+                          <td>{{x.date}}</td>
+                          
+  
+  
+                          <td class="nav-item menu-items form-inline">
+                            <a class="" href="/deleteweight/?id={{x.id}}">
+                              <span class="menu-icon">
+                            <i class="mdi  mdi mdi-delete">
+                            
+                            
+                            </a>
+  
+                            <a style="margin-left: 10px;" href="/editweight/?id={{x.id}}">
+                              
+                            <i class="mdi  mdi mdi-border-color">
+                              </span>
+                            
+                            </a>
+                          </label></td>                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div></div></div> -->
+              
+              <!-- <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card" style=" top: 10px; left: 520px; width:10px; height: 350px;">
+                  <div class="card-body">
+                    <h4 class="card-title">Line chart</h4>
+                    <canvas id='myChart'></canvas>
+
+                   
+                </div>
+                </div>
+                </div> -->
+                
+            
+      </div>
+      </div>
+      <script>
+        let weekarray=[]
+        document.addEventListener('DOMContentLoaded', function () {
+     const ctx = document.getElementById('weightChart').getContext('2d');
+     const weeks = JSON.parse('{{ weeks_json|safe }}');
+        const weights = JSON.parse('{{ weights_json|safe }}');
+
+     weekarray.push(weeks)
+     console.log(weekarray[0])
+
+ 
+     const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: weeks, // Convert weeks to strings if they are numbers
+            datasets: [{
+                label: 'Weight Gain Progress',
+                data: weights,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false,
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Weeks'
+                    }
+                },
+                y: {
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                    title: {
+                        display: true,
+                        text: 'Weights'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+       
+         
+      
+        
+      
+   {% endblock %}
+    
+    

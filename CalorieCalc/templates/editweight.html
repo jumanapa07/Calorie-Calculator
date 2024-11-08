@@ -1,0 +1,80 @@
+{% extends 'home.html' %}
+{% block content %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+    <div class="row">
+  
+ 
+        <div class="col-lg-6 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Edit Weight Log</h4>
+               <!-- <p class="card-description"> Add class <code>.table</code>  -->
+              </p>
+              <div class="table-responsive">
+                <table id='weightable' class="table">
+                  <thead>
+                    {% for x in var %}
+                    <tr>
+                      <th>Weight in KG</th>
+                      <th>Date</th>
+                      <!-- <th>Quantity</th>
+                      <th>Calorie</th> -->
+                      <th>Action</th>
+  
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                        <tr>
+                            <form action="/editweight/?id={{x.id}}" method="post">
+                                {% csrf_token %}
+                            <div class="form-group">
+                            <td><input class="typeahead" type="number" name="weight" value="{{x.weight}}">
+                            </td>
+                            <td><input class="typeahead" type="date" name="date" id="datePicker" onchange="validateDate()" value="{% if x.date %}{{ x.date|date:'Y-m-d' }}{% endif %}">
+                            </td>
+                      
+                      <!-- <td class="text-danger"> {{x.quantity}} {{x.unit}} </i></td>
+                      <td class="text-danger">{{x.calories}} <i class="mdi mdi-arrow-up"></i></td> -->
+  
+  
+                      <td class="nav-item menu-items form-inline">
+                          
+
+                        <a style="margin-left: 10px;" href="/editweight/?id={{var.id}}">
+                          
+                        <button class="btn btn-primary mr-2">Edit</button>
+                        </a>
+                      </label></td>             </div>    </form>     </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div></div></div>
+
+       
+
+        </div>
+      </div>
+    </div>
+
+<script src="/static/js/weight.js"></script>
+<script>
+    function validateDate() {
+      var selectedDate = new Date(document.getElementById('datePicker').value);
+      var today = new Date();
+
+      if (selectedDate > today) {
+        alert('Please select a date on or before today.');
+        document.getElementById('datePicker').value = ''; // Clear the invalid date
+      }
+    }
+  </script>
+  
+{% endblock %}
+
+
+
+

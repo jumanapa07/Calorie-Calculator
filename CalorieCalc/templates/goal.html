@@ -1,0 +1,125 @@
+{% extends 'home.html' %}
+{% block content %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+    
+
+          <div class="col-md-6 grid-margin stretch-card">
+            <div class="card" style="height: 100px;">
+              <div class="card-body">
+                <h4 class="card-title" style=" margin-block: 2px; margin-top: -23px;">Record your Weight</h4>
+               <form action="/goal/" method="post">
+                {% csrf_token %}
+                <div class="form-group row">
+                  <div class="col">
+                    <label>Date</label>
+                    <div id="the-basics">
+                      <input class="typeahead" type="date" name="date" id="datePicker" onchange="validateDate()">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label>Weight in kg</label>
+                    <div id="bloodhound">
+                      <input class="typeahead" type="number" name="weight">
+                      
+                    </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary" style="width: 50px; height: 36px; margin-top: 22px;">Add</button>
+                  </form>
+                </div>
+               
+                <div class="col-lg-12 grid-margin stretch-card"> 
+                  <div class="card" style="top: 15px; left: 520px; width: 800px; height: 400px;"> <!-- Increase the width here -->
+                      <div class="card-body">
+                          <h4 class="card-title">Weight chart</h4>
+                          <canvas id="myChart" style="width:100%; height:100%;"></canvas> <!-- Make the canvas fill its container -->
+                      </div>
+                  </div>
+              </div>
+   
+              </div>
+            </div>
+          </div>
+          
+         
+
+        
+        
+       
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card" style="height: 400px;">
+                <div class="card-body">
+                  <h4 class="card-title">Weight Log</h4>
+                   <!-- <p class="card-description"> Add class <code>.table</code>  -->
+                  </p>
+                  <div class="table-responsive">
+                    <table id='weightable' class="table">
+                      <thead>
+                        <tr>
+                          <th>Weight in KG</th>
+                          <th>Date</th>
+                          <!-- <th>Quantity</th>
+                          <th>Calorie</th> -->
+                          <th>Action</th>
+  
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for x in queryset %}
+                        <tr>
+                          <td>{{x.weight}}</td>
+                          <td>{{x.date}}</td>
+                          <!-- <td class="text-danger"> {{x.quantity}} {{x.unit}} </i></td>
+                          <td class="text-danger">{{x.calories}} <i class="mdi mdi-arrow-up"></i></td> -->
+  
+  
+                          <td class="nav-item menu-items form-inline">
+                            <a class="" href="/deleteweight/?id={{x.id}}">
+                              <span class="menu-icon">
+                            <i class="mdi  mdi mdi-delete"></i>
+                            
+                            
+                            </a>
+  
+                            <a style="margin-left: 10px;" href="/editweight/?id={{x.id}}">
+                              
+                            <i class="mdi  mdi mdi-border-color"></i>
+                              </span>
+                            
+                            </a>
+                          </label></td>                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div></div></div>
+              
+              <!-- <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card" style=" top: 10px; left: 520px; width:10px; height: 350px;">
+                  <div class="card-body">
+                    <h4 class="card-title">Line chart</h4>
+                    <canvas id='myChart'></canvas>
+
+                   
+                </div>
+                </div>
+                </div> -->
+                
+            
+      </div>
+      </div>
+      <script src="/static/js/weight.js"></script><script>
+        function validateDate() {
+          var selectedDate = new Date(document.getElementById('datePicker').value);
+          var today = new Date();
+    
+          if (selectedDate > today) {
+            alert('Please select a date on or before today.');
+            document.getElementById('datePicker').value = ''; // Clear the invalid date
+          }
+        }
+      </script>
+      
+   {% endblock %}
+    

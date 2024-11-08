@@ -1,0 +1,32 @@
+<!-- nutrient_data.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrient Data</title>
+</head>
+<body>
+
+  <h1>Nutrient Data</h1>
+
+  {% if food_list %}
+    <ul>
+      {% for food_item in food_list %}
+        <li>
+          <strong>Food Name:</strong> {{ food_item.food_name }}<br>
+          <strong>Calories:</strong> {{ food_item.calories }}<br>
+          <strong>Quantity:</strong> {{ food_item.quantity }}<br>
+          <strong>Serving Unit:</strong> {{ food_item.serving_unit }}<br>
+          <strong>Weight:</strong> {{ food_item.weight }}<br>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No nutrient data available.</p>
+  {% endif %}
+
+</body>
+</html>

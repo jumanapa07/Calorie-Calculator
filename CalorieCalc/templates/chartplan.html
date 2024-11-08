@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weight Gain Plan</title>
+
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Weight Gain Plan</h1>
+
+    <p>Current Weight: {{ current_weight }}</p>
+    <p>Desired Weight: {{ desired_weight }}</p>
+    <p>Duration Needed (in weeks): {{ duration_needed }}</p>
+
+    <!-- Canvas element to render the chart -->
+    <canvas id="weightChart" width="400" height="200"></canvas>
+
+    <p>Total Weight Gain: {{ total_weight_gain }}</p>
+    <p>Daily Caloric Intake: {{ daily_caloric_intake }}</p>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('weightChart').getContext('2d');
+            const weeks = [2, 3, 4, 5];
+            const weights = [45.2, 46.3, 48.3, 49.7];
+
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: weeks,
+                    datasets: [{
+                        label: 'Weight Gain Progress',
+                        data: weights,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'linear',
+                            position: 'bottom'
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
